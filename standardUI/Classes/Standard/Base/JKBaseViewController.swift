@@ -9,6 +9,8 @@ import UIKit
 import JKSandBoxManagerSwift
 
 open class JKBaseViewController_Swift:UIViewController,JKViewProtocol_Swift {
+    public var model: Any?
+    
     /// 导航栏是否隐藏
     public var navBarHidden:Bool
     

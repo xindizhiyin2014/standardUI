@@ -10,6 +10,8 @@ import JKNoticationHelper_Swift
 
 open class JKBaseTableViewContainer_Swift: UIView, JKTableContainerProtocol_Swift,JKTableViewContainerDelegate_Swift,JKFastNotificationProtocol {
     
+    public var model: Any?
+    
     public override init(frame: CGRect) {
         super.init(frame: frame)
         if jk_autoInit() {

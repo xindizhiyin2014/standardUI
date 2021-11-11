@@ -64,5 +64,7 @@ open class JKBaseCollectionViewModel_Swift: NSObject, JKCollectionViewModelProto
         }
         return config.columnNumber
     }
-    
+    public override init() {
+        super.init()
+    }
 }

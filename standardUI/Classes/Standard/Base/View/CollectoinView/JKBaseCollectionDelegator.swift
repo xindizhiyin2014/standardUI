@@ -8,7 +8,8 @@
 import UIKit
 import JKUIEventHandler_Swift
 import JKNoticationHelper_Swift
-open class JKBaseCollectionDelegator_Swift<ContainerType: JKCollectionContainerProtocol_Swift>: NSObject, JKCollectionDelegatorProtocol_Swift, UICollectionViewDelegateFlowLayout,JKFastNotificationProtocol {
+
+open class JKBaseCollectionDelegator_Swift<ContainerType: JKCollectionContainerProtocol_Swift>: NSObject, JKCollectionDelegatorProtocol_Swift, UICollectionViewDelegateFlowLayout,JKFastNotificationProtocol where ContainerType : UIResponder {
     
     let defaultReuseIdentifier = "JKDefaultCellID";
     let defaultViewReuseIdentifier = "JKReuseViewID";
@@ -65,15 +66,10 @@ open class JKBaseCollectionDelegator_Swift<ContainerType: JKCollectionContainerP
             return collectionView.dequeueReusableCell(withReuseIdentifier: defaultReuseIdentifier, for: indexPath)
             #endif
         }
-        if let cell:UICollectionViewCell&JKReuseViewProtocol_Swift = collectionView.dequeueReusableCell(withReuseIdentifier: reuseViewIdentity(cls), for: indexPath) as? UICollectionViewCell&JKReuseViewProtocol_Swift {
-            if let responder = container as? UIResponder {
-                cell.jk_nextResponder = responder
-            } else {
-                #if DEBUG
-                fatalError("\(container) shall be a SubClass of UIResponder")
-                #endif
-            }
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseViewIdentity(cls), for: indexPath) as? JKBaseCollectionCell_Swift {
+            cell.jk_nextResponder = container
             let model = container.collectionViewModel.itemViewModel(at: indexPath.item, section: indexPath.section)
+            cell.model = model
             cell.update(with: model)
             return cell
         }

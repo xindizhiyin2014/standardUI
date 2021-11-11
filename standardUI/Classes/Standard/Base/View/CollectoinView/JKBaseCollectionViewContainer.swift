@@ -9,7 +9,7 @@ import UIKit
 import JKNoticationHelper_Swift
 
 open class JKBaseCollectionContainer_Swift: UIView, JKCollectionContainerProtocol_Swift,JKFastNotificationProtocol {
-    
+    public var model: Any?
 
     public override init(frame: CGRect) {
         super.init(frame: frame)

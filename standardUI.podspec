@@ -31,7 +31,7 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '9.0'
 
   s.source_files = 'standardUI/Classes/**/*'
-  s.swift_versions = '4.2'
+  s.swift_versions = '5.2'
 
    s.resource_bundles = {
      'standardUI' => ['standardUI/Assets/*.png']

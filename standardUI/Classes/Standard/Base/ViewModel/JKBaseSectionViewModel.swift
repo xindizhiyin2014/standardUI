@@ -26,5 +26,6 @@ open class JKBaseSectionViewModel_Swift:JKSectionViewModelProtocol_Swift {
     open var dataSourceArr: [Any] = []
     
     open var datas: [Any] = []
-
+    
+    public init() {}
 }

@@ -8,7 +8,7 @@
 import UIKit
 
 open class JKBaseTableHeaderFooterView_Swift : UITableViewHeaderFooterView, JKTableHeadeFooterViewProtocol_Swift {
-   
+    
     public override init(reuseIdentifier: String?)
     {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -21,7 +21,7 @@ open class JKBaseTableHeaderFooterView_Swift : UITableViewHeaderFooterView, JKTa
     }
     
     // MARK: JKBaseItemViewVMProtocol
-    public var jk_model: Any?
+    public var model: Any?
     
     // MARK: JKBaseTableHeadeFooterViewProtocol
     open class func estimateheaderFooterHeight(with model: Any) -> CGFloat {
@@ -77,7 +77,7 @@ open class JKBaseTableCell_Swift : UITableViewCell, JKTableCellProtocol_Swift, J
     open func didSelectView(with model: Any) {}
     
     // MARK: JKBaseItemViewVMProtocol
-    public var jk_model: Any?
+    public var model: Any?
     
     // MARK: JKBaseTableHeadeFooterViewProtocol
     open class func estimateHeight(with model: Any?) -> CGFloat {
@@ -85,7 +85,7 @@ open class JKBaseTableCell_Swift : UITableViewCell, JKTableCellProtocol_Swift, J
     }
         
     // MARK: JKBaseReuseViewProtocol
-    open class func viewHeight(with model : Any?) -> CGFloat { return 0 }
+    open class func viewHeight(with model : Any?) -> CGFloat { return UITableView.automaticDimension }
     open class func viewSize(with model : Any?) -> CGSize { return CGSize.zero }
         
     /// 为重用视图添加对应viewModel的监听,禁止开发者主动调用
