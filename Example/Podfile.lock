@@ -1,0 +1,47 @@
+PODS:
+  - JKDataHelper_Swift (0.1.26)
+  - JKNoticationHelper_Swift (0.1.3)
+  - JKSandBoxManagerSwift (0.1.7.9)
+  - JKUIEventHandler_Swift (0.1.7)
+  - Nimble (8.0.9)
+  - Quick (2.2.1)
+  - SnapKit (4.2.0)
+  - standardUI (0.1.0):
+    - JKDataHelper_Swift
+    - JKNoticationHelper_Swift
+    - JKSandBoxManagerSwift
+    - JKUIEventHandler_Swift
+    - SnapKit
+
+DEPENDENCIES:
+  - Nimble (~> 8.0.7)
+  - Quick (~> 2.2.0)
+  - standardUI (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - JKDataHelper_Swift
+    - JKNoticationHelper_Swift
+    - JKSandBoxManagerSwift
+    - JKUIEventHandler_Swift
+    - Nimble
+    - Quick
+    - SnapKit
+
+EXTERNAL SOURCES:
+  standardUI:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  JKDataHelper_Swift: b6c44c0887f972f30b318a619b397d7dd5c8c1c9
+  JKNoticationHelper_Swift: f4a48096df2aef4ca0ad55c13387b7c202070a63
+  JKSandBoxManagerSwift: 7d108de03b02cdb2615a2830156bfa392559d364
+  JKUIEventHandler_Swift: 2df843d2385138fa2de5edf4bfdc8b07c31138ad
+  Nimble: 98b888285a615fd34f20e61753cf58ea1402bde4
+  Quick: f5754d69b7013f5864c29aab9ae6f0c79c5bc200
+  SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
+  standardUI: 4c2e8df6d0f295728c9010d5858a13554aadb511
+
+PODFILE CHECKSUM: 8a97233e1878bf56cfce5fbcb2c8497aa451cf98
+
+COCOAPODS: 1.10.1
