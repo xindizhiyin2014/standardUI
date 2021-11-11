@@ -9,6 +9,6 @@ target 'standardUI_Example' do
     inherit! :search_paths
 
     pod 'Quick', '~> 2.2.0'
-    pod 'Nimble', '~> 8.0.7'
+    pod 'Nimble', '~> 9.2.1'
   end
 end
