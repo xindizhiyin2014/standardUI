@@ -26,6 +26,7 @@ public class JKBaseViewModel_Swift {
     public var jk_identifier:String?
     public var jk_size:CGSize?
     public var jk_trackModel:JKTrackModel_Swift?
+    public init() {}
 }
 
 public class JKBaseReuseViewModel_Swift:JKBaseViewModel_Swift,JKReuseViewModelProtocol_Swift {

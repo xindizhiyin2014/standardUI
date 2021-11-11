@@ -9,6 +9,7 @@ import UIKit
 
 open class JKBaseCollectionHeaderFooterView_Swift: UICollectionReusableView, JKCollectionReuseViewProtocol_Swift{
     
+    public var model: Any?
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -56,6 +57,8 @@ open class JKBaseCollectionHeaderFooterView_Swift: UICollectionReusableView, JKC
 }
 
 open class JKBaseCollectionCell_Swift: UICollectionViewCell, JKReuseViewProtocol_Swift, JKReuseViewDelegateProtocol_Swift  {
+    
+    public var model: Any?
     
     public override init(frame: CGRect) {
         super.init(frame: frame)

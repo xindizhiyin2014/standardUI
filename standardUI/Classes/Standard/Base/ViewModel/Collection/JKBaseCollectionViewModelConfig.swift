@@ -26,4 +26,6 @@ open class JKBaseCollectionViewModelConfig_Swift: JKCollectionViewModelConfigPro
     open var headerModel: Any? = nil
     
     open var footerModel: Any? = nil
+    
+    public init() {}
 }

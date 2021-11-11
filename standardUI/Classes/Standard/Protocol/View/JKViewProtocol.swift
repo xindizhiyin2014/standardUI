@@ -19,10 +19,29 @@ public protocol JKViewProtocol_Swift:NSObjectProtocol {
     func bindUIActions()
     func addObservers()
     func removeObservers()
-    //    associatedtype ModeType
+    var model: Any? { get set }
     func update(with model: Any)
 }
 
+
+public protocol JKViewModelTypeProtocol : JKViewProtocol_Swift {
+    associatedtype ModeType
+    var vm: ModeType? { get }
+}
+
+public extension JKViewModelTypeProtocol {
+    var vm : ModeType? {
+        get {
+            if let m = model as? ModeType {
+                return m
+            }
+            return nil
+        }
+        set {
+            model = newValue
+        }
+    }
+}
 
 //MARK: container
 public protocol JKContainerViewProtocol_Swift: JKViewProtocol_Swift {

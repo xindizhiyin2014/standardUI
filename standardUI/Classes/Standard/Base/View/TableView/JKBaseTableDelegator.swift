@@ -7,7 +7,7 @@
 
 import UIKit
 import JKNoticationHelper_Swift
-open class JKBaseTableDelegator_Swift<ContainerType: JKTableContainerProtocol_Swift>:NSObject, JKTableDelegatorProtocol_Swift,JKFastNotificationProtocol {
+open class JKBaseTableDelegator_Swift<ContainerType: JKTableContainerProtocol_Swift>:NSObject, JKTableDelegatorProtocol_Swift,JKFastNotificationProtocol where ContainerType : UIResponder  {
     let defaultReuseIdentifier = "JKDefaultCellID";
     let defaultViewReuseIdentifier = "JKReuseViewID";
     
@@ -57,17 +57,9 @@ open class JKBaseTableDelegator_Swift<ContainerType: JKTableContainerProtocol_Sw
         }
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: reuseViewIdentity(cls)) as? JKBaseTableCell_Swift {
-            if let responder = container as? UIResponder {
-                cell.jk_nextResponder = responder
-            } else {
-                #if DEBUG
-                fatalError("\(container) shall be a SubClass of UIResponder")
-                #endif
-            }
+            cell.jk_nextResponder = container
             let model = container.tableViewModel.itemViewModel(at: indexPath.row, section: indexPath.section)
-            if let viewModel = model as? NSObject {
-                cell.jk_model = viewModel
-            }
+            cell.model = model
             cell.update(with: model)
             return cell
         }
@@ -83,9 +75,7 @@ open class JKBaseTableDelegator_Swift<ContainerType: JKTableContainerProtocol_Sw
         if let cls: AnyClass = container.tableViewModel.headerViewClass(at: section) {
             if let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: reuseViewIdentity(cls)) as?  JKBaseTableHeaderFooterView_Swift {
                 let model = container.tableViewModel.headerViewModel(at: section)
-                if let trackModel = model as? NSObject {
-                    view.jk_model = trackModel
-                }
+                view.model = model
                 view.update(with: model)
                 return view
             }
@@ -103,9 +93,7 @@ open class JKBaseTableDelegator_Swift<ContainerType: JKTableContainerProtocol_Sw
         if let cls: AnyClass = container.tableViewModel.footerViewClass(at: section) {
             if let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: reuseViewIdentity(cls)) as?  JKBaseTableHeaderFooterView_Swift {
                 let model = container.tableViewModel.footerViewModel(at: section)
-                if let trackModel = model as? NSObject {
-                    view.jk_model = trackModel
-                }
+                view.model = model
                 view.update(with: model)
                 return view
             }
