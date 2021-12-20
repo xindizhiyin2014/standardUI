@@ -28,8 +28,8 @@ open class JKBaseCollectionContainer_Swift: UIView, JKCollectionContainerProtoco
             loadInitData()
         }
     }
-    
-    //MARK: JKBaseCollectionContainerProtocol
+            
+    //MARK: JKCollectionContainerProtocol_Swift JKBaseCollectionContainerProtocol
     
     open var collectionViewLayout: UICollectionViewLayout = UICollectionViewFlowLayout()
     

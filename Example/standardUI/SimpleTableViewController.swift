@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import standardUI
+import StandardUI
 import SnapKit
 
 class SimpleTableViewController: JKBaseTableViewController_Swift {
@@ -49,12 +49,16 @@ class SimpleTableViewController: JKBaseTableViewController_Swift {
     
     override func loadInitData() {
         self.tableViewModel.datas = [
-            SimpleCell.Action(title: "TableView Demo", handelr: {
-                self.navigationController?.pushViewController(MultiCellTableViewController(), animated: true)
+            SimpleCell.Action(title: "TableView Demo", handelr: { [weak self] in
+                self?.navigationController?.pushViewController(MultiCellTableViewController(), animated: true)
             }),
-            SimpleCell.Action(title: "Collection Demo", handelr: {
-                self.navigationController?.pushViewController(MultiCellCollectionController(), animated: true)
+            SimpleCell.Action(title: "Collection Demo", handelr: { [weak self] in
+                self?.navigationController?.pushViewController(MultiCellCollectionController(), animated: true)
+            }),
+            SimpleCell.Action(title: "DecorateView Demo", handelr: { [weak self] in
+                self?.navigationController?.pushViewController(DecorateViewController(), animated: true)
             })
+            
         ]
     }
     

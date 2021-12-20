@@ -2,7 +2,7 @@
 
 import Quick
 import Nimble
-import standardUI
+import StandardUI
 
 class TableOfContentsSpec: QuickSpec {
     override func spec() {

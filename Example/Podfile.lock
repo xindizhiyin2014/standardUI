@@ -6,7 +6,7 @@ PODS:
   - Nimble (9.2.1)
   - Quick (2.2.1)
   - SnapKit (4.2.0)
-  - standardUI (0.1.0):
+  - StandardUI (0.1.0):
     - JKDataHelper_Swift
     - JKNoticationHelper_Swift
     - JKSandBoxManagerSwift
@@ -16,7 +16,7 @@ PODS:
 DEPENDENCIES:
   - Nimble (~> 9.2.1)
   - Quick (~> 2.2.0)
-  - standardUI (from `../`)
+  - StandardUI (from `../`)
 
 SPEC REPOS:
   trunk:
@@ -29,7 +29,7 @@ SPEC REPOS:
     - SnapKit
 
 EXTERNAL SOURCES:
-  standardUI:
+  StandardUI:
     :path: "../"
 
 SPEC CHECKSUMS:
@@ -40,8 +40,8 @@ SPEC CHECKSUMS:
   Nimble: e7e615c0335ee4bf5b0d786685451e62746117d5
   Quick: f5754d69b7013f5864c29aab9ae6f0c79c5bc200
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
-  standardUI: 7310405a3305305878a6c196b60d88cb2b5d658f
+  StandardUI: 4ee7f7401698ab8a304d233a880967655b2fa17a
 
-PODFILE CHECKSUM: 737690607d280298a502ff6dc0a4e612bef3c529
+PODFILE CHECKSUM: b21f6811ac072013aec57fb25fa95b2baa963e08
 
 COCOAPODS: 1.11.2

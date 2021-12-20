@@ -32,7 +32,7 @@ public protocol JKCollectionDelegatorProtocol_Swift: UICollectionViewDataSource,
 //MARK: collectionView 容器
 public protocol JKCollectionContainerProtocol_Swift: JKListViewProtocol_Swift{
     var collectionView: UICollectionView { get set }
-    var collectionViewLayout: UICollectionViewLayout  { get }
+    var collectionViewLayout: UICollectionViewLayout  { get set }
     
     associatedtype ListViewType: JKCollectionViewModelProtocol_Swift
     var collectionViewModel: ListViewType { get set }

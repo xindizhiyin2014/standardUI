@@ -7,7 +7,7 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = 'standardUI'
+  s.name             = 'StandardUI'
   s.version          = '0.1.0'
   s.summary          = 'A short description of standardUI.'
 
@@ -30,11 +30,11 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '9.0'
 
-  s.source_files = 'standardUI/Classes/**/*'
+  s.source_files = 'StandardUI/Classes/**/*'
   s.swift_versions = '5.2'
 
    s.resource_bundles = {
-     'standardUI' => ['standardUI/Assets/*.png']
+     'standardUI' => ['StandardUI/Assets/*.png']
    }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import standardUI
+import StandardUI
 import SnapKit
 import JKUIEventHandler_Swift
 
