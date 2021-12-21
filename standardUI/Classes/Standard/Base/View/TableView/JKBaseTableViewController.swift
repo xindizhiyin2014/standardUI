@@ -41,15 +41,15 @@ open class JKBaseTableViewController_Swift: JKBaseViewController_Swift, JKTableC
     
     open lazy var listUpdater: JKBaseListPartUpdater_Swift<JKBaseTableViewModel_Swift> = { JKBaseListPartUpdater_Swift(self.tableView, listVM: self.tableViewModel) }()
     
-    open func cellClasses() -> [AnyClass] {
+    open func cellClasses() -> [JKReuseViewProtocol_Swift.Type] {
         if let configCls = self.tableViewModel.config.cellClass {
             return [configCls]
         }
-        return [AnyClass]()
+        return []
     }
     
-    open func reuseViewClasses() -> [AnyClass] {
-        var configCls = [AnyClass]()
+    open func reuseViewClasses() -> [JKReuseViewProtocol_Swift.Type] {
+        var configCls = [JKReuseViewProtocol_Swift.Type]()
         if let cls = self.tableViewModel.config.headerClass {
             configCls.append(cls)
         }

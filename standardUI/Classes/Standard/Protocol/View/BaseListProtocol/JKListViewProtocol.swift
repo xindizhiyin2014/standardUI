@@ -7,10 +7,6 @@
 
 import Foundation
 
-public func reuseViewIdentity(_ cls:AnyClass) -> String {
-    return "\(cls.self)_ID"
-}
-
 public protocol JKListViewPartRefreshUpdaterProtocol_Swift {
     
     var isListViewUpdating: Bool { get set }
@@ -33,11 +29,15 @@ public protocol JKListViewPartRefreshProtocol_Swift {
 
 public protocol JKListViewProtocol_Swift: JKViewProtocol_Swift, JKListViewPartRefreshProtocol_Swift {
     
-    func cellClasses() -> [AnyClass]
-    func reuseViewClasses() -> [AnyClass]
+    func cellClasses() -> [JKReuseViewProtocol_Swift.Type]
+    func reuseViewClasses() -> [JKReuseViewProtocol_Swift.Type]
     
     func pullRefresh()
     func loadMore()
+}
+
+public protocol JKCollectionViewProtocol_Swift: JKListViewProtocol_Swift {
+    func decorateViewClasses() -> [JKReuseViewProtocol_Swift.Type]
 }
 
 // MARK: - item (tableview/collection cell)
@@ -49,6 +49,9 @@ public protocol JKReuseViewProtocol_Swift: JKViewProtocol_Swift {
     func addReuseVMObservers()
     /// 移除重用视图对应viewModel上的监听,禁止开发者主动调用
     func removeReuseVMObservers()
+    
+    /// 复用ID
+    static var reuseViewIdentity: String { get }
 }
 
 // item (UITableViewDelegate/UICollectionViewDelegate)

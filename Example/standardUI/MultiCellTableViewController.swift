@@ -16,7 +16,7 @@ class MultiCellTableViewController: JKBaseTableViewController_Swift, JKChainEven
     fileprivate let section1 = DemoSection1()
     fileprivate let section2 = DemoSection2()
 
-    override func cellClasses() -> [AnyClass] {
+    override func cellClasses() -> [JKReuseViewProtocol_Swift.Type] {
         return [NormalCell.self,
                 BlueCell.self,
                 ClickCell.self,
@@ -97,7 +97,7 @@ private class DemoSection1 : JKBaseSectionViewModel_Swift {
 fileprivate class DemoSection2 : JKBaseSectionViewModel_Swift {
     
     class ExpendVM: JKReuseViewModelProtocol_Swift {
-        var reuseViewClass: AnyClass = ExpendCell.self
+        var reuseViewClass: JKReuseViewProtocol_Swift.Type = ExpendCell.self
         var name = "点击这行，修改高度"
         var isExpand = false
     }
@@ -146,7 +146,7 @@ fileprivate class DemoSection2 : JKBaseSectionViewModel_Swift {
 
 // 通用类型VM
 fileprivate struct NormalCellVM: JKReuseViewModelProtocol_Swift {
-    var reuseViewClass: AnyClass
+    var reuseViewClass: JKReuseViewProtocol_Swift.Type
     @JKObserve var name: String?
 }
 

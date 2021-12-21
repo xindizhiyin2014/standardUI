@@ -29,7 +29,7 @@ open class JKBaseCollectionHeaderFooterView_Swift: UICollectionReusableView, JKC
     
     //MARK: JKBaseViewProtocol
     public required convenience init(_ config: AnyObject?) {
-        self.init(frame: CGRect.zero)
+        self.init(frame: .zero)
     }
     
     required public init?(coder: NSCoder) {
@@ -75,7 +75,7 @@ open class JKBaseCollectionCell_Swift: UICollectionViewCell, JKReuseViewProtocol
     
     
     required convenience public init(_ config: AnyObject?) {
-        self.init(frame: CGRect.zero)
+        self.init(frame: .zero)
     }
     
     required public init?(coder: NSCoder) {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol JKViewProtocol_Swift:NSObjectProtocol {
+public protocol JKViewProtocol_Swift: NSObjectProtocol {
     
 //    associatedtype InitConfigType
     init(_ config: AnyObject?)
@@ -24,7 +24,7 @@ public protocol JKViewProtocol_Swift:NSObjectProtocol {
 }
 
 
-public protocol JKViewModelTypeProtocol : JKViewProtocol_Swift {
+public protocol JKViewModelTypeProtocol: JKViewProtocol_Swift {
     associatedtype ModeType
     var vm: ModeType? { get }
 }

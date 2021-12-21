@@ -45,20 +45,27 @@ open class JKBaseCollectionContainer_Swift: UIView, JKCollectionContainerProtoco
         JKBaseListPartUpdater_Swift(self.collectionView, listVM: self.collectionViewModel)
     }()
     
-
-    open func cellClasses() -> [AnyClass] {
+    open func cellClasses() -> [JKReuseViewProtocol_Swift.Type] {
         if let configCls = self.collectionViewModel.config.cellClass {
             return [configCls]
         }
-        return [AnyClass]()
+        return []
     }
     
-    open func reuseViewClasses() -> [AnyClass] {
-        var configCls = [AnyClass]()
+    open func reuseViewClasses() -> [JKReuseViewProtocol_Swift.Type] {
+        var configCls = [JKReuseViewProtocol_Swift.Type]()
         if let cls = self.collectionViewModel.config.headerClass {
             configCls.append(cls)
         }
         if let cls = self.collectionViewModel.config.footerClass {
+            configCls.append(cls)
+        }
+        return configCls
+    }
+    
+    public func decorateViewClasses() -> [JKReuseViewProtocol_Swift.Type] {
+        var configCls: [JKReuseViewProtocol_Swift.Type] = []
+        if let cls = self.collectionViewModel.config.decorateClass {
             configCls.append(cls)
         }
         return configCls

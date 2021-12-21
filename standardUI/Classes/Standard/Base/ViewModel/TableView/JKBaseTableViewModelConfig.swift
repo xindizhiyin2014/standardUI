@@ -9,19 +9,19 @@ import Foundation
 
 public struct JKBaseTableViewModelConfig_Swift : JKListViewModelConfigProtocol_Swift {
     
-    public var cellClass: AnyClass?
+    public var cellClass: JKReuseViewProtocol_Swift.Type?
     
-    public var headerClass: AnyClass?
+    public var headerClass: JKReuseViewProtocol_Swift.Type?
     
-    public var footerClass: AnyClass?
+    public var footerClass: JKReuseViewProtocol_Swift.Type?
     
     public var headerModel: Any?
     
     public var footerModel: Any?
     
-    public init(cellClass: AnyClass? = nil,
-                headerClass: AnyClass? = nil,
-                footerClass: AnyClass? = nil,
+    public init(cellClass: JKReuseViewProtocol_Swift.Type? = nil,
+                headerClass: JKReuseViewProtocol_Swift.Type? = nil,
+                footerClass: JKReuseViewProtocol_Swift.Type? = nil,
                 headerModel: Any? = nil,
                 footerModel: Any? = nil)
     {

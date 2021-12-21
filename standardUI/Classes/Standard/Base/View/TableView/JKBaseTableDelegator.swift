@@ -8,8 +8,6 @@
 import UIKit
 import JKNoticationHelper_Swift
 open class JKBaseTableDelegator_Swift<ContainerType: JKTableContainerProtocol_Swift>:NSObject, JKTableDelegatorProtocol_Swift,JKFastNotificationProtocol where ContainerType : UIResponder  {
-    let defaultReuseIdentifier = "JKDefaultCellID";
-    let defaultViewReuseIdentifier = "JKReuseViewID";
     
     /// 是否是容器处理点击事件
     public var isContainerHandleSelect:Bool = false
@@ -22,16 +20,16 @@ open class JKBaseTableDelegator_Swift<ContainerType: JKTableContainerProtocol_Sw
     
     public func registerCells() {
         for cls in container.cellClasses() {
-            container.tableView.register(cls, forCellReuseIdentifier: reuseViewIdentity(cls))
+            container.tableView.register(cls, forCellReuseIdentifier: cls.reuseViewIdentity)
         }
-        container.tableView.register(JKBaseTableCell_Swift.self, forCellReuseIdentifier: defaultReuseIdentifier)
+        container.tableView.register(JKBaseTableCell_Swift.self, forCellReuseIdentifier: JKBaseTableCell_Swift.reuseViewIdentity)
     }
     
     public func registerReuseViews() {
         for cls in container.reuseViewClasses() {
-            container.tableView.register(cls, forHeaderFooterViewReuseIdentifier: reuseViewIdentity(cls))
+            container.tableView.register(cls, forHeaderFooterViewReuseIdentifier: cls.reuseViewIdentity)
         }
-        container.tableView.register(JKBaseTableHeaderFooterView_Swift.self, forHeaderFooterViewReuseIdentifier: defaultViewReuseIdentifier)
+        container.tableView.register(JKBaseTableHeaderFooterView_Swift.self, forHeaderFooterViewReuseIdentifier: JKBaseTableHeaderFooterView_Swift.reuseViewIdentity)
     }
     
     //MARK: UITableViewDataSource
@@ -45,7 +43,7 @@ open class JKBaseTableDelegator_Swift<ContainerType: JKTableContainerProtocol_Sw
     
     // MARK: cell
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cls: AnyClass = container.tableViewModel.itemViewClass(at: indexPath.row, section: indexPath.section)
+        let cls = container.tableViewModel.itemViewClass(at: indexPath.row, section: indexPath.section)
         
         let contain = container.cellClasses().contains { $0 == cls }
         if !contain {
@@ -56,7 +54,7 @@ open class JKBaseTableDelegator_Swift<ContainerType: JKTableContainerProtocol_Sw
             #endif
         }
         
-        if let cell = tableView.dequeueReusableCell(withIdentifier: reuseViewIdentity(cls)) as? JKBaseTableCell_Swift {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: cls.reuseViewIdentity) as? JKBaseTableCell_Swift {
             cell.jk_nextResponder = container
             let model = container.tableViewModel.itemViewModel(at: indexPath.row, section: indexPath.section)
             cell.model = model
@@ -72,8 +70,8 @@ open class JKBaseTableDelegator_Swift<ContainerType: JKTableContainerProtocol_Sw
     
     // MARK: header
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if let cls: AnyClass = container.tableViewModel.headerViewClass(at: section) {
-            if let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: reuseViewIdentity(cls)) as?  JKBaseTableHeaderFooterView_Swift {
+        if let cls = container.tableViewModel.headerViewClass(at: section) {
+            if let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: cls.reuseViewIdentity) as?  JKBaseTableHeaderFooterView_Swift {
                 let model = container.tableViewModel.headerViewModel(at: section)
                 view.model = model
                 view.update(with: model)
@@ -90,8 +88,8 @@ open class JKBaseTableDelegator_Swift<ContainerType: JKTableContainerProtocol_Sw
     
     // MARK: footer
     public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if let cls: AnyClass = container.tableViewModel.footerViewClass(at: section) {
-            if let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: reuseViewIdentity(cls)) as?  JKBaseTableHeaderFooterView_Swift {
+        if let cls = container.tableViewModel.footerViewClass(at: section) {
+            if let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: cls.reuseViewIdentity) as?  JKBaseTableHeaderFooterView_Swift {
                 let model = container.tableViewModel.footerViewModel(at: section)
                 view.model = model
                 view.update(with: model)
@@ -119,16 +117,14 @@ open class JKBaseTableDelegator_Swift<ContainerType: JKTableContainerProtocol_Sw
     }
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if let cls = container.tableViewModel.itemViewClass(at: indexPath.row, section: indexPath.section) as?  JKReuseViewProtocol_Swift.Type {
-            let model = container.tableViewModel.itemViewModel(at: indexPath.row, section: indexPath.section)
-            return cls.viewHeight(with: model)
-        }
-        return 0
+        let cls = container.tableViewModel.itemViewClass(at: indexPath.row, section: indexPath.section)
+        let model = container.tableViewModel.itemViewModel(at: indexPath.row, section: indexPath.section)
+        return cls.viewHeight(with: model)
     }
     
     // MARK: header
     public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if let cls = container.tableViewModel.headerViewClass(at: section) as? JKReuseViewProtocol_Swift.Type {
+        if let cls = container.tableViewModel.headerViewClass(at: section) {
             let model = container.tableViewModel.headerViewModel(at: section)
             return cls.viewHeight(with: model)
         }
@@ -137,7 +133,7 @@ open class JKBaseTableDelegator_Swift<ContainerType: JKTableContainerProtocol_Sw
     
     // MARK: footer
     public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if let cls = container.tableViewModel.footerViewClass(at: section) as? JKReuseViewProtocol_Swift.Type {
+        if let cls = container.tableViewModel.footerViewClass(at: section) {
             let model = container.tableViewModel.footerViewModel(at: section)
             return cls.viewHeight(with: model)
         }

@@ -9,11 +9,19 @@ import Foundation
 import SnapKit
 
 open class JKSimpleCollectionViewContainer_Swift<CollectionContainerDelegate:NSObject&JKCollectionViewContainerDelegate_Swift>:JKBaseCollectionContainer_Swift {
+    
     typealias ContainerDelegate = NSObject&JKCollectionViewContainerDelegate_Swift
-    private var privateCellClasses:Array<AnyClass>?
-    private var privateRuseViewClasses:Array<AnyClass>?
+    
+    private var privateCellClasses:[JKReuseViewProtocol_Swift.Type]
+    private var privateRuseViewClasses:[JKReuseViewProtocol_Swift.Type]
     unowned private var containerDelegate:CollectionContainerDelegate
-    public init(cellClasses:Array<AnyClass>?, reuseViewClasses:Array<AnyClass>?, layout:UICollectionViewLayout, collectionViewModel:JKBaseCollectionViewModel_Swift, containerDelegate:CollectionContainerDelegate) {
+    
+    public init(cellClasses:[JKReuseViewProtocol_Swift.Type] = [],
+                reuseViewClasses:[JKReuseViewProtocol_Swift.Type] = [],
+                layout:UICollectionViewLayout,
+                collectionViewModel:JKBaseCollectionViewModel_Swift,
+                containerDelegate:CollectionContainerDelegate)
+    {
         self.privateCellClasses = cellClasses
         self.privateRuseViewClasses = reuseViewClasses
         self.containerDelegate = containerDelegate
@@ -38,16 +46,16 @@ open class JKSimpleCollectionViewContainer_Swift<CollectionContainerDelegate:NSO
         collectionView.reloadData()
     }
     
-    open override func cellClasses() -> [AnyClass] {
-        if self.privateCellClasses != nil {
-            return self.privateCellClasses!
+    open override func cellClasses() -> [JKReuseViewProtocol_Swift.Type] {
+        if !privateCellClasses.isEmpty {
+            return privateCellClasses
         }
         return super.cellClasses()
     }
     
-    open override func reuseViewClasses() -> [AnyClass] {
-        if self.privateRuseViewClasses != nil {
-            return self.privateRuseViewClasses!
+    open override func reuseViewClasses() -> [JKReuseViewProtocol_Swift.Type] {
+        if !privateRuseViewClasses.isEmpty {
+            return privateRuseViewClasses
         }
         return super.reuseViewClasses()
     }

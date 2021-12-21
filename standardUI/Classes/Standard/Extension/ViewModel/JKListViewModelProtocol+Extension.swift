@@ -98,7 +98,7 @@ extension JKListViewModelProtocol_Swift {
         #endif
     }
     
-    public func itemViewClass(at item: Int, section: Int) -> AnyClass {
+    public func itemViewClass(at item: Int, section: Int) -> JKReuseViewProtocol_Swift.Type {
         
         // 配置优先级最高
         if let configCellCls = config.cellClass {
@@ -128,7 +128,7 @@ extension JKListViewModelProtocol_Swift {
         #endif
     }
     
-    public func headerViewClass(at section: Int) -> AnyClass? {
+    public func headerViewClass(at section: Int) -> JKReuseViewProtocol_Swift.Type? {
         
         // 配置优先级最高
         if let configCellCls = config.headerClass {
@@ -146,7 +146,7 @@ extension JKListViewModelProtocol_Swift {
         return nil
     }
     
-    public func footerViewClass(at section: Int) -> AnyClass? {
+    public func footerViewClass(at section: Int) -> JKReuseViewProtocol_Swift.Type? {
         
         // 配置优先级最高
         if let configCellCls = config.footerClass {

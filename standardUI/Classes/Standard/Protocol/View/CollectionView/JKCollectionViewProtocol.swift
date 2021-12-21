@@ -27,10 +27,11 @@ public protocol JKCollectionDelegatorProtocol_Swift: UICollectionViewDataSource,
     var isContainerHandleSelect:Bool {get set}
     func registerCells()
     func registerReuseViews()
+    func registerDecorateViews()
 }
 
 //MARK: collectionView 容器
-public protocol JKCollectionContainerProtocol_Swift: JKListViewProtocol_Swift{
+public protocol JKCollectionContainerProtocol_Swift: JKCollectionViewProtocol_Swift {
     var collectionView: UICollectionView { get set }
     var collectionViewLayout: UICollectionViewLayout  { get set }
     

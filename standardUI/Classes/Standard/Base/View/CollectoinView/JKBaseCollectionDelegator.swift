@@ -11,9 +11,6 @@ import JKNoticationHelper_Swift
 
 open class JKBaseCollectionDelegator_Swift<ContainerType: JKCollectionContainerProtocol_Swift>: NSObject, JKCollectionDelegatorProtocol_Swift, UICollectionViewDelegateFlowLayout,JKFastNotificationProtocol where ContainerType : UIResponder {
     
-    let defaultReuseIdentifier = "JKDefaultCellID";
-    let defaultViewReuseIdentifier = "JKReuseViewID";
-    
     public var isContainerHandleSelect: Bool = false
     
     //MARK: JKBaseTableDelegatorProtocol
@@ -24,16 +21,16 @@ open class JKBaseCollectionDelegator_Swift<ContainerType: JKCollectionContainerP
     
     public func registerCells() {
         for cls in container.cellClasses() {
-            container.collectionView.register(cls, forCellWithReuseIdentifier: reuseViewIdentity(cls))
+            container.collectionView.register(cls, forCellWithReuseIdentifier: cls.reuseViewIdentity)
 
         }
-        container.collectionView.register(JKBaseCollectionCell_Swift.self, forCellWithReuseIdentifier: defaultReuseIdentifier)
+        container.collectionView.register(JKBaseCollectionCell_Swift.self, forCellWithReuseIdentifier: JKBaseCollectionCell_Swift.reuseViewIdentity)
     }
     
     public func registerReuseViews() {
         for cls in container.reuseViewClasses() {
             if let reuseCls = cls as? JKCollectionReuseViewProtocol_Swift.Type {
-                container.collectionView.register(cls, forSupplementaryViewOfKind: reuseCls.kind(), withReuseIdentifier:reuseViewIdentity(cls))
+                container.collectionView.register(cls, forSupplementaryViewOfKind: reuseCls.kind(), withReuseIdentifier:cls.reuseViewIdentity)
             } else {
                 #if DEBUG
                 fatalError("\(cls) shall comfirm JKCollectionReuseViewProtocol_Swift")
@@ -41,8 +38,14 @@ open class JKBaseCollectionDelegator_Swift<ContainerType: JKCollectionContainerP
             }
         }
         
-        container.collectionView.register(JKBaseCollectionHeaderFooterView_Swift.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: defaultViewReuseIdentifier)
-        container.collectionView.register(JKBaseCollectionHeaderFooterView_Swift.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: defaultViewReuseIdentifier)
+        container.collectionView.register(JKBaseCollectionHeaderFooterView_Swift.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: JKBaseCollectionHeaderFooterView_Swift.reuseViewIdentity)
+        container.collectionView.register(JKBaseCollectionHeaderFooterView_Swift.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: JKBaseCollectionHeaderFooterView_Swift.reuseViewIdentity)
+    }
+    
+    public func registerDecorateViews() {
+        for cls in container.decorateViewClasses() {
+            container.collectionViewLayout.register(cls, forDecorationViewOfKind: cls.reuseViewIdentity)
+        }
     }
     
     //MARK: UICollectionViewDataSource
@@ -55,7 +58,7 @@ open class JKBaseCollectionDelegator_Swift<ContainerType: JKCollectionContainerP
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cls: AnyClass = container.collectionViewModel.itemViewClass(at: indexPath.item, section: indexPath.section)
+        let cls = container.collectionViewModel.itemViewClass(at: indexPath.item, section: indexPath.section)
         
         // chendong 处理未注册时的错误，dequeueReusableCell会抛出oc exception，swift无法catch
         let contain = container.cellClasses().contains { $0 == cls }
@@ -66,7 +69,7 @@ open class JKBaseCollectionDelegator_Swift<ContainerType: JKCollectionContainerP
             return collectionView.dequeueReusableCell(withReuseIdentifier: defaultReuseIdentifier, for: indexPath)
             #endif
         }
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseViewIdentity(cls), for: indexPath) as? JKBaseCollectionCell_Swift {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cls.reuseViewIdentity, for: indexPath) as? JKBaseCollectionCell_Swift {
             cell.jk_nextResponder = container
             let model = container.collectionViewModel.itemViewModel(at: indexPath.item, section: indexPath.section)
             cell.model = model
@@ -84,16 +87,16 @@ open class JKBaseCollectionDelegator_Swift<ContainerType: JKCollectionContainerP
     public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
         if kind == UICollectionView.elementKindSectionHeader {
-            if let cls: AnyClass = container.collectionViewModel.headerViewClass(at: indexPath.section) {
-                if let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseViewIdentity(cls), for: indexPath) as? UICollectionReusableView&JKCollectionReuseViewProtocol_Swift {
+            if let cls = container.collectionViewModel.headerViewClass(at: indexPath.section) {
+                if let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: cls.reuseViewIdentity, for: indexPath) as? UICollectionReusableView&JKCollectionReuseViewProtocol_Swift {
                     let model = container.collectionViewModel.headerViewModel(at: indexPath.section)
                     view.update(with: model)
                     return view
                 }
             }
         } else if kind == UICollectionView.elementKindSectionFooter {
-            if let cls: AnyClass = container.collectionViewModel.footerViewClass(at: indexPath.section) {
-                if let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseViewIdentity(cls), for: indexPath) as? UICollectionReusableView&JKCollectionReuseViewProtocol_Swift {
+            if let cls = container.collectionViewModel.footerViewClass(at: indexPath.section) {
+                if let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: cls.reuseViewIdentity, for: indexPath) as? UICollectionReusableView&JKCollectionReuseViewProtocol_Swift {
                     let model = container.collectionViewModel.footerViewModel(at: indexPath.section)
                     view.update(with: model)
                     return view
@@ -152,15 +155,9 @@ open class JKBaseCollectionDelegator_Swift<ContainerType: JKCollectionContainerP
     //MARK: UICollectionViewDelegateFlowLayout
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if let cls = container.collectionViewModel.itemViewClass(at: indexPath.item, section: indexPath.section) as? JKReuseViewProtocol_Swift.Type {
-            let model = container.collectionViewModel.itemViewModel(at: indexPath.item, section: indexPath.section)
-            return cls.viewSize(with: model)
-        }
-        #if DEBUG
-        fatalError("")
-        #else
-        return CGSize.zero
-        #endif
+        let cls = container.collectionViewModel.itemViewClass(at: indexPath.item, section: indexPath.section)
+        let model = container.collectionViewModel.itemViewModel(at: indexPath.item, section: indexPath.section)
+        return cls.viewSize(with: model)
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -173,14 +170,14 @@ open class JKBaseCollectionDelegator_Swift<ContainerType: JKCollectionContainerP
         container.collectionViewModel.itemMinInterSpacing(with: section)
     }
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        if let cls = container.collectionViewModel.headerViewClass(at: section) as? JKReuseViewProtocol_Swift.Type {
+        if let cls = container.collectionViewModel.headerViewClass(at: section) {
             let model = container.collectionViewModel.headerViewModel(at: section)
             return cls.viewSize(with: model)
         }
         return CGSize.zero
     }
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        if let cls = container.collectionViewModel.footerViewClass(at: section) as? JKReuseViewProtocol_Swift.Type {
+        if let cls = container.collectionViewModel.footerViewClass(at: section) {
             let model = container.collectionViewModel.footerViewModel(at: section)
             return cls.viewSize(with: model)
         }

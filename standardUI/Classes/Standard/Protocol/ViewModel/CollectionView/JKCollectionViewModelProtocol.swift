@@ -22,12 +22,23 @@ public protocol JKCollectionViewModelConfigProtocol_Swift : JKListViewModelConfi
     /// collectionView对应的列数
     var columnNumber : Int { get set }
     
+    /// 装饰视图
+    var decorateClass: JKReuseViewProtocol_Swift.Type? { get set }
+    var showDecorate : Bool { get set }
+    var decorateInset: UIEdgeInsets { get set }
 }
 
-//MARK: cellvm : JKItemViewModelProtocol,  sectionvm: JKSectionViewModelProtocol
-//...
+//MARK: - cellvm : JKItemViewModelProtocol,
 
-//MARK: Collectionview  vm
+//MARK: - sectionvm: JKSectionViewModelProtocol
+public protocol JSCollectionSectionViewModelProtocol_Swift: JKSectionViewModelProtocol_Swift {
+    /// 装饰视图
+    var decorateClass: JKReuseViewProtocol_Swift.Type? { get set }
+    var showDecorate : Bool { get set }
+    var decorateInset: UIEdgeInsets { get set }
+}
+
+//MARK: - Collectionview  vm
 public protocol JKCollectionViewModelProtocol_Swift : JKListViewModelProtocol_Swift {
     
     /// 每个section下单元格行间距
@@ -41,5 +52,14 @@ public protocol JKCollectionViewModelProtocol_Swift : JKListViewModelProtocol_Sw
 
     /// 获取某个section的列数
     func sectionColumnNumber(with section : Int) -> Int
+    
+    /// 是否展示装饰视图
+    func decorateDisplay(in section: Int) -> Bool
+    
+    /// 某个section的装饰视图类型
+    func decorateClass(in section: Int) -> JKReuseViewProtocol_Swift.Type
+    
+    /// 分区内装饰视图外边距
+    func decorateInset(in section: Int) -> UIEdgeInsets
     
 }

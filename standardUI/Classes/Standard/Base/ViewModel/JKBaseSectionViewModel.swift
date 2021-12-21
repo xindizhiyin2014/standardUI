@@ -7,7 +7,7 @@
 
 import UIKit
 
-open class JKBaseSectionViewModel_Swift:JKSectionViewModelProtocol_Swift {
+open class JKBaseSectionViewModel_Swift: JKSectionViewModelProtocol_Swift {
     
     open var headerModel: JKReuseViewModelProtocol_Swift? = nil
     

@@ -13,15 +13,22 @@ open class JKBaseCollectionViewModelConfig_Swift: JKCollectionViewModelConfigPro
     
     open var interSpace: CGFloat = 0
     
-    open var sectionInsets: UIEdgeInsets = UIEdgeInsets.zero
+    open var sectionInsets: UIEdgeInsets = .zero
     
     open var columnNumber: Int = 0
     
-    open var cellClass: AnyClass? = nil
+    open var cellClass: JKReuseViewProtocol_Swift.Type? = nil
     
-    open var headerClass: AnyClass? = nil
+    open var headerClass: JKReuseViewProtocol_Swift.Type? = nil
     
-    open var footerClass: AnyClass? = nil
+    open var footerClass: JKReuseViewProtocol_Swift.Type? = nil
+    
+    /// 装饰视图
+    open var decorateClass: JKReuseViewProtocol_Swift.Type? = nil
+    
+    open var showDecorate: Bool = false
+    
+    open var decorateInset: UIEdgeInsets = .zero
     
     open var headerModel: Any? = nil
     

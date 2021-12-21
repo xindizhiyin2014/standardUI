@@ -25,11 +25,11 @@ public protocol JKListViewModelPartialRefreshProtocol_Swift {
 
 // MARK: - Item ViewModel
 public protocol JKReuseViewModelProtocol_Swift {
-    var reuseViewClass : AnyClass { get set }
+    var reuseViewClass : JKReuseViewProtocol_Swift.Type { get set }
 }
 
 // MARK: - Section ViewModel
-public protocol JKSectionViewModelProtocol_Swift : JKListViewModelPartialRefreshProtocol_Swift {
+public protocol JKSectionViewModelProtocol_Swift: JKListViewModelPartialRefreshProtocol_Swift {
     
     /// 分区区头的数据源
     var headerModel : JKReuseViewModelProtocol_Swift? { get set }

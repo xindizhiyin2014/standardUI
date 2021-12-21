@@ -10,10 +10,16 @@ import SnapKit
 
 open class JKSimpleTableViewContainer_Swift<TableContainerDelegate:NSObject&JKTableViewContainerDelegate_Swift>:JKBaseTableViewContainer_Swift {
 
-    private var privateCellClasses:Array<AnyClass>?
-    private var privateReuseViewClassess:Array<AnyClass>?
+    private var privateCellClasses:[JKReuseViewProtocol_Swift.Type]
+    private var privateReuseViewClassess:[JKReuseViewProtocol_Swift.Type]
     unowned private var containerDelegate:TableContainerDelegate
-    public init(cellClasses:Array<AnyClass>?, reuseviewClasses:Array<AnyClass>?, tableViewStyle:UITableView.Style, tableViewModel:JKBaseTableViewModel_Swift, containerDelegate:TableContainerDelegate) {
+    
+    public init(cellClasses:[JKReuseViewProtocol_Swift.Type] = [],
+                reuseviewClasses:[JKReuseViewProtocol_Swift.Type] = [],
+                tableViewStyle:UITableView.Style = .plain,
+                tableViewModel:JKBaseTableViewModel_Swift,
+                containerDelegate:TableContainerDelegate)
+    {
         
         self.privateCellClasses = cellClasses
         self.privateReuseViewClassess = reuseviewClasses
@@ -38,16 +44,16 @@ open class JKSimpleTableViewContainer_Swift<TableContainerDelegate:NSObject&JKTa
         tableView.reloadData()
     }
     
-    open override func cellClasses() -> [AnyClass] {
-        if self.privateCellClasses != nil {
-            return self.privateCellClasses!
+    open override func cellClasses() -> [JKReuseViewProtocol_Swift.Type] {
+        if !privateCellClasses.isEmpty {
+            return privateCellClasses
         }
         return super.cellClasses()
     }
     
-    open override func reuseViewClasses() -> [AnyClass] {
-        if self.privateReuseViewClassess != nil {
-            return self.privateReuseViewClassess!
+    open override func reuseViewClasses() -> [JKReuseViewProtocol_Swift.Type] {
+        if !privateReuseViewClassess.isEmpty {
+            return privateReuseViewClassess
         }
         return super.reuseViewClasses()
     }

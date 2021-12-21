@@ -9,12 +9,14 @@
 import UIKit
 import StandardUI
 
+class JKCustomLayout: UICollectionViewFlowLayout {
+    
+}
+
 class DecorateViewController: JKBaseCollectionViewController_Swift {
 
     override var collectionViewLayout: UICollectionViewLayout {
-        set {
-            self.collectionViewLayout = newValue
-        }
+        set {}
         get {
             UICollectionViewFlowLayout()
         }
@@ -24,7 +26,7 @@ class DecorateViewController: JKBaseCollectionViewController_Swift {
         view.addSubview(collectionView)
     }
     
-    override func cellClasses() -> [AnyClass] {
+    override func cellClasses() -> [JKReuseViewProtocol_Swift.Type] {
         return [CellA.self]
     }
     
@@ -42,14 +44,18 @@ class DecorateViewController: JKBaseCollectionViewController_Swift {
     }
 }
 
+class DecorateSectionVM : JKBaseSectionViewModel_Swift {
+    var reuseViewClass: JKReuseViewProtocol_Swift.Type = CellA.self
+//    var decorateClass:
+    var title = "123"
+}
+
 class SectionVM : JKBaseSectionViewModel_Swift {
     
     override var datas: [Any] {
         get {
-            [CellVM(), CellVM(), CellVM(), CellVM(), CellVM(), CellVM(), CellVM(), CellVM(), CellVM(), CellVM()]
+            Array(repeating: CellVM(), count: 15)
         }
-        set {
-            self.datas = newValue
-        }
+        set {}
     }
 }

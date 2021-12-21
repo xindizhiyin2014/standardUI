@@ -34,7 +34,7 @@ open class JKBaseTableViewContainer_Swift: UIView, JKTableContainerProtocol_Swif
     
     public var tableViewModel: JKBaseTableViewModel_Swift = { JKBaseTableViewModel_Swift() }()
     
-    public lazy var tableView: UITableView = { UITableView(frame: CGRect.zero, style: self.tableViewStyle) }()
+    public lazy var tableView: UITableView = { UITableView(frame: .zero, style: self.tableViewStyle) }()
     
     public lazy var tableDelegator: JKBaseTableDelegator_Swift<JKBaseTableViewContainer_Swift> = { JKBaseTableDelegator_Swift(container: self) }()
     
@@ -42,15 +42,15 @@ open class JKBaseTableViewContainer_Swift: UIView, JKTableContainerProtocol_Swif
     
     public lazy var listUpdater: JKBaseListPartUpdater_Swift<JKBaseTableViewModel_Swift> = { JKBaseListPartUpdater_Swift(self.tableView, listVM: self.tableViewModel) }()
     
-    open func cellClasses() -> [AnyClass] {
+    open func cellClasses() -> [JKReuseViewProtocol_Swift.Type] {
         if let configCls = self.tableViewModel.config.cellClass {
             return [configCls]
         }
-        return [AnyClass]()
+        return []
     }
     
-    open func reuseViewClasses() -> [AnyClass] {
-        var configCls = [AnyClass]()
+    open func reuseViewClasses() -> [JKReuseViewProtocol_Swift.Type] {
+        var configCls = [JKReuseViewProtocol_Swift.Type]()
         if let cls = self.tableViewModel.config.headerClass {
             configCls.append(cls)
         }

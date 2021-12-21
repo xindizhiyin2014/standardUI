@@ -30,9 +30,8 @@ public class JKBaseViewModel_Swift {
 }
 
 public class JKBaseReuseViewModel_Swift:JKBaseViewModel_Swift,JKReuseViewModelProtocol_Swift {
-    public var reuseViewClass: AnyClass
-   public init(reuseViewClass:AnyClass) {
+    public var reuseViewClass: JKReuseViewProtocol_Swift.Type
+    public init(reuseViewClass:JKReuseViewProtocol_Swift.Type) {
         self.reuseViewClass = reuseViewClass
     }
-    
 }

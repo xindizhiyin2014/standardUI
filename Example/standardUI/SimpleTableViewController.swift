@@ -43,7 +43,7 @@ class SimpleTableViewController: JKBaseTableViewController_Swift {
         }
     }
     
-    override func cellClasses() -> [AnyClass] {
+    override func cellClasses() -> [JKReuseViewProtocol_Swift.Type] {
         return [SimpleCell.self]
     }
     

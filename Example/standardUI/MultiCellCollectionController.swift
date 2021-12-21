@@ -17,7 +17,7 @@ class MultiCellCollectionController: JKBaseCollectionViewController_Swift, JKCha
         view.addSubview(collectionView)
     }
     
-    override func cellClasses() -> [AnyClass] {
+    override func cellClasses() -> [JKReuseViewProtocol_Swift.Type] {
         return [CellA.self]
     }
     
@@ -54,6 +54,7 @@ class CellA : JKBaseCollectionCell_Swift {
 }
 
 struct CellVM : JKReuseViewModelProtocol_Swift {
-    var reuseViewClass: AnyClass = CellA.self
+    var reuseViewClass: JKReuseViewProtocol_Swift.Type = CellA.self
+//    var decorateClass: 
     var title = "123"
 }
