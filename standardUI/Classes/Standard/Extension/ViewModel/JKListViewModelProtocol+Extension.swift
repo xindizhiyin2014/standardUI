@@ -7,6 +7,7 @@
 
 import Foundation
 import JKDataHelper_Swift
+
 extension JKListViewModelPartialRefreshProtocol_Swift {
     public var realDatas : [Any] {
         if isPartialRefresh {
@@ -30,8 +31,7 @@ extension JKListViewModelProtocol_Swift {
     public func itemCount(at section : Int) -> Int {
         /// 多分区
         if let sectionDatas = realDatas as? [JKSectionViewModelProtocol_Swift] {
-            if let sectionModel = sectionDatas.jk_object(index: section)
-             {
+            if let sectionModel = sectionDatas.jk_object(index: section) {
                 return sectionModel.datas.count
             }
         }

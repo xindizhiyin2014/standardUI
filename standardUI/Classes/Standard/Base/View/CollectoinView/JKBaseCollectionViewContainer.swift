@@ -35,7 +35,7 @@ open class JKBaseCollectionContainer_Swift: UIView, JKCollectionContainerProtoco
     
     open var collectionViewModel: JKBaseCollectionViewModel_Swift = { JKBaseCollectionViewModel_Swift() }()
     
-    open lazy var collectionView: UICollectionView = { UICollectionView(frame: CGRect.zero, collectionViewLayout: self.collectionViewLayout) }()
+    open lazy var collectionView: UICollectionView = { UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout) }()
     
     open lazy var collectionDelegator: JKBaseCollectionDelegator_Swift<JKBaseCollectionContainer_Swift> = { JKBaseCollectionDelegator_Swift(self) }()
     
@@ -72,12 +72,9 @@ open class JKBaseCollectionContainer_Swift: UIView, JKCollectionContainerProtoco
     }
     
     open func addObservers() {
-        weak var weakSelf = self
-        jk_observeNotification(at: collectionView, notificationName: JKCollectionViewDidSelectNotification) { notification  in
+        jk_observeNotification(at: collectionView, notificationName: JKCollectionViewDidSelectNotification) { [weak self] notification  in
             let indexPath:IndexPath = notification.object as! IndexPath
-            if weakSelf != nil {
-                weakSelf!.container(collectionView: weakSelf!.collectionView, didSelect: indexPath)
-            }
+            self?.container(collectionView: self!.collectionView, didSelect: indexPath)
         }
     }
     

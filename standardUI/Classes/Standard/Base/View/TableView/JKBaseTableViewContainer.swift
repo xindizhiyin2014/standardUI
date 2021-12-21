@@ -61,12 +61,9 @@ open class JKBaseTableViewContainer_Swift: UIView, JKTableContainerProtocol_Swif
     }
     
     open func addObservers() {
-        weak var weakSelf = self
-        jk_observeNotification(at: tableView, notificationName: JKTableViewDidSelectNotification) { notification  in
+        jk_observeNotification(at: tableView, notificationName: JKTableViewDidSelectNotification) { [weak self] notification  in
             let indexPath:IndexPath = notification.object as! IndexPath
-            if weakSelf != nil {
-                weakSelf!.container(tableView: weakSelf!.tableView, didSelect: indexPath)
-            }
+            self?.container(tableView: self!.tableView, didSelect: indexPath)
         }
     }
     

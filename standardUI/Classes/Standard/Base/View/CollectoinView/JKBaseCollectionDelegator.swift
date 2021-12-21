@@ -44,7 +44,6 @@ open class JKBaseCollectionDelegator_Swift<ContainerType: JKCollectionContainerP
     
     public func registerDecorateViews() {
         for cls in container.decorateViewClasses() {
-            //DecorationViewDemo-master
             container.collectionViewLayout.register(cls, forDecorationViewOfKind: cls.reuseViewIdentity)
         }
     }

@@ -73,12 +73,9 @@ open class JKSimpleCollectionViewContainer_Swift<CollectionContainerDelegate:NSO
     }
     
     open override func addObservers() {
-        weak var weakSelf = self
-        jk_observeNotification(at: collectionView, notificationName: JKCollectionViewDidSelectNotification) { notification  in
+        jk_observeNotification(at: collectionView, notificationName: JKCollectionViewDidSelectNotification) { [weak self] notification  in
             let indexPath:IndexPath = notification.object as! IndexPath
-            if weakSelf != nil {
-                weakSelf!.containerDelegate.container(collectionView: weakSelf!.collectionView, didSelect: indexPath)
-            }
+            self?.containerDelegate.container(collectionView: self!.collectionView, didSelect: indexPath)
         }
     }
    
