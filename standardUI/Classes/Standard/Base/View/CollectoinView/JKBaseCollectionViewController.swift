@@ -18,6 +18,7 @@ open class JKBaseCollectionViewController_Swift: JKBaseViewController_Swift, JKC
         if jk_autoInit() {
             collectionDelegator.registerCells()
             collectionDelegator.registerReuseViews()
+            collectionDelegator.registerDecorateViews()
             
             collectionView.delegate = collectionDelegator
             collectionView.dataSource = collectionDelegator
@@ -60,10 +61,10 @@ open class JKBaseCollectionViewController_Swift: JKBaseViewController_Swift, JKC
         return configCls
     }
     
-    public func decorateViewClasses() -> [JKReuseViewProtocol_Swift.Type] {
+    open func decorateViewClasses() -> [JKReuseViewProtocol_Swift.Type] {
         var configCls = [JKReuseViewProtocol_Swift.Type]()
-        if let cls = self.collectionViewModel.config.decorateClass {
-            configCls.append(cls)
+        if let vm = self.collectionViewModel.config.decorateViewModel {
+            configCls.append(type(of: vm).decorateClass)
         }
         return configCls
     }

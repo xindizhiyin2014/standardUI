@@ -29,3 +29,7 @@ open class JKBaseSectionViewModel_Swift: JKSectionViewModelProtocol_Swift {
     
     public init() {}
 }
+
+open class JKBaseCollecttionSectionViewModel_Swift: JKBaseSectionViewModel_Swift, JKCollectionSectionViewModelProtocol_Swift {
+    public var decorateViewModel: JKDecorateViewModel? = nil
+}

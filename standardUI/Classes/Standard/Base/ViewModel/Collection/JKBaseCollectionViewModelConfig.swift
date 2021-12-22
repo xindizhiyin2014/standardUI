@@ -23,16 +23,11 @@ open class JKBaseCollectionViewModelConfig_Swift: JKCollectionViewModelConfigPro
     
     open var footerClass: JKReuseViewProtocol_Swift.Type? = nil
     
-    /// 装饰视图
-    open var decorateClass: JKReuseViewProtocol_Swift.Type? = nil
-    
-    open var showDecorate: Bool = false
-    
-    open var decorateInset: UIEdgeInsets = .zero
-    
     open var headerModel: Any? = nil
     
     open var footerModel: Any? = nil
+    /// 装饰视图
+    open var decorateViewModel: JKDecorateViewModel? = nil
     
     public init() {}
 }

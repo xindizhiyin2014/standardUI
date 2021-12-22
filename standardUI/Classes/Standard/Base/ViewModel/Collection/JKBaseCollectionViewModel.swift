@@ -21,7 +21,7 @@ open class JKBaseCollectionViewModel_Swift: NSObject, JKCollectionViewModelProto
     
     open func itemMinLineSpacing(with section: Int) -> CGFloat {
         /// 多分区
-        if let sectionDatas = realDatas as? [JSCollectionSectionViewModelProtocol_Swift] {
+        if let sectionDatas = realDatas as? [JKCollectionSectionViewModelProtocol_Swift] {
             if let sectionModel = sectionDatas.jk_object(index: section) {
                 if let space = sectionModel.minimumLineSpacing {
                     return space
@@ -33,7 +33,7 @@ open class JKBaseCollectionViewModel_Swift: NSObject, JKCollectionViewModelProto
     
     open func itemMinInterSpacing(with section: Int) -> CGFloat {
         /// 多分区
-        if let sectionDatas = realDatas as? [JSCollectionSectionViewModelProtocol_Swift] {
+        if let sectionDatas = realDatas as? [JKCollectionSectionViewModelProtocol_Swift] {
             if let sectionModel = sectionDatas.jk_object(index: section) {
                 if let space = sectionModel.minimumInteritemSpacing {
                     return space
@@ -45,7 +45,7 @@ open class JKBaseCollectionViewModel_Swift: NSObject, JKCollectionViewModelProto
     
     open func sectionInsets(with section: Int) -> UIEdgeInsets {
         /// 多分区
-        if let sectionDatas = realDatas as? [JSCollectionSectionViewModelProtocol_Swift] {
+        if let sectionDatas = realDatas as? [JKCollectionSectionViewModelProtocol_Swift] {
             if let sectionModel = sectionDatas.jk_object(index: section) {
                 if let inset = sectionModel.sectionInsets {
                     return inset
@@ -57,7 +57,7 @@ open class JKBaseCollectionViewModel_Swift: NSObject, JKCollectionViewModelProto
     
     open func sectionColumnNumber(with section: Int) -> Int {
         /// 多分区
-        if let sectionDatas = realDatas as? [JSCollectionSectionViewModelProtocol_Swift] {
+        if let sectionDatas = realDatas as? [JKCollectionSectionViewModelProtocol_Swift] {
             if let sectionModel = sectionDatas.jk_object(index: section) {
                 return sectionModel.columnNumber
             }
@@ -67,33 +67,40 @@ open class JKBaseCollectionViewModel_Swift: NSObject, JKCollectionViewModelProto
     
     public func decorateDisplay(in section: Int) -> Bool {
         /// 多分区
-        if let sectionDatas = realDatas as? [JSCollectionSectionViewModelProtocol_Swift] {
-            if let sectionModel = sectionDatas.jk_object(index: section) {
-                return sectionModel.showDecorate
+        if let sectionDatas = realDatas as? [JKCollectionSectionViewModelProtocol_Swift] {
+            if let _ = sectionDatas.jk_object(index: section)?.decorateViewModel {
+                return true
             }
         }
-        return config.showDecorate
+        if let _ = config.decorateViewModel {
+            return true
+        }
+        return false
     }
     
-    public func decorateClass(in section: Int) -> JKReuseViewProtocol_Swift.Type {
+    public func decorateClass(in section: Int) -> JKDecorateViewType.Type? {
         /// 多分区
-        if let sectionDatas = realDatas as? [JSCollectionSectionViewModelProtocol_Swift] {
-            if let sectionModel = sectionDatas.jk_object(index: section) {
-                if let cls = sectionModel.decorateClass {
-                    return cls
-                }
+        if let sectionDatas = realDatas as? [JKCollectionSectionViewModelProtocol_Swift] {
+            if let decorateViewModel = sectionDatas.jk_object(index: section)?.decorateViewModel {
+                return type(of: decorateViewModel).decorateClass
             }
         }
-        return config.decorateClass!
+        if let decVM = config.decorateViewModel {
+            return type(of: decVM).decorateClass
+        }
+        return nil
     }
     
     public func decorateInset(in section: Int) -> UIEdgeInsets {        /// 多分区
-        if let sectionDatas = realDatas as? [JSCollectionSectionViewModelProtocol_Swift] {
-            if let sectionModel = sectionDatas.jk_object(index: section) {
-                return sectionModel.decorateInset
+        if let sectionDatas = realDatas as? [JKCollectionSectionViewModelProtocol_Swift] {
+            if let decorateViewModel = sectionDatas.jk_object(index: section)?.decorateViewModel {
+                return decorateViewModel.decorateInset
             }
         }
-        return config.decorateInset
+        if let decVM = config.decorateViewModel {
+            return decVM.decorateInset
+        }
+        return .zero
     }
     
     public override init() {

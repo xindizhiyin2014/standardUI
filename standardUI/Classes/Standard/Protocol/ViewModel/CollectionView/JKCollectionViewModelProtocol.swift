@@ -7,6 +7,24 @@
 
 import UIKit
 
+/// 装饰视图VM
+public typealias JKDecorateViewType = UICollectionReusableView & JKReuseViewProtocol_Swift
+public protocol JKCollectionDecorateViewModelProtocol_Swift {
+    static var decorateClass: JKDecorateViewType.Type { get }
+    var decorateInset: UIEdgeInsets { get set }
+    static func make() -> Self
+}
+
+public extension JKCollectionDecorateViewModelProtocol_Swift where Self: UICollectionViewLayoutAttributes {
+    // 使用该初始化方法,不指定下标
+    static func make() -> Self {
+        self.init(forDecorationViewOfKind: Self.decorateClass.reuseViewIdentity, with: IndexPath(item: 0, section: 0))
+    }
+}
+
+/// 数据类型必须为UICollectionViewLayoutAttributes，可通过继承该类传递数据到装饰视图
+public typealias JKDecorateViewModel = UICollectionViewLayoutAttributes & JKCollectionDecorateViewModelProtocol_Swift
+
 //MARK: collectionview 配置
 public protocol JKCollectionViewModelConfigProtocol_Swift : JKListViewModelConfigProtocol_Swift {
     
@@ -22,24 +40,19 @@ public protocol JKCollectionViewModelConfigProtocol_Swift : JKListViewModelConfi
     /// collectionView对应的列数
     var columnNumber : Int { get set }
     
-    /// 装饰视图
-    var decorateClass: JKReuseViewProtocol_Swift.Type? { get set }
-    var showDecorate : Bool { get set }
-    var decorateInset: UIEdgeInsets { get set }
+    /// 装饰视图VM
+    var decorateViewModel: JKDecorateViewModel? { get set }
 }
 
 //MARK: - cellvm : JKItemViewModelProtocol,
-
 //MARK: - sectionvm: JKSectionViewModelProtocol
-public protocol JSCollectionSectionViewModelProtocol_Swift: JKSectionViewModelProtocol_Swift {
+public protocol JKCollectionSectionViewModelProtocol_Swift: JKSectionViewModelProtocol_Swift {
     /// 装饰视图
-    var decorateClass: JKReuseViewProtocol_Swift.Type? { get set }
-    var showDecorate : Bool { get set }
-    var decorateInset: UIEdgeInsets { get set }
+    var decorateViewModel: JKDecorateViewModel? { get set }
 }
 
 //MARK: - Collectionview  vm
-public protocol JKCollectionViewModelProtocol_Swift : JKListViewModelProtocol_Swift {
+public protocol JKCollectionViewModelProtocol_Swift : JKListViewModelProtocol_Swift where ConfigType : JKCollectionViewModelConfigProtocol_Swift {
     
     /// 每个section下单元格行间距
     func itemMinLineSpacing(with section : Int) -> CGFloat
@@ -57,7 +70,7 @@ public protocol JKCollectionViewModelProtocol_Swift : JKListViewModelProtocol_Sw
     func decorateDisplay(in section: Int) -> Bool
     
     /// 某个section的装饰视图类型
-    func decorateClass(in section: Int) -> JKReuseViewProtocol_Swift.Type
+    func decorateClass(in section: Int) -> JKDecorateViewType.Type?
     
     /// 分区内装饰视图外边距
     func decorateInset(in section: Int) -> UIEdgeInsets

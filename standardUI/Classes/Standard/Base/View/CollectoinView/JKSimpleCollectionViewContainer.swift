@@ -35,6 +35,7 @@ open class JKSimpleCollectionViewContainer_Swift<CollectionContainerDelegate:NSO
         
         collectionDelegator.registerCells()
         collectionDelegator.registerReuseViews()
+        collectionDelegator.registerDecorateViews()
         
         collectionView.delegate = collectionDelegator
         collectionView.dataSource = collectionDelegator
